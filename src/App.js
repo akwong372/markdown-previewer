@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import marked from 'marked';
+import DOMPurify from 'dompurify';
 
 const App = () => {
 
@@ -7,9 +9,10 @@ const App = () => {
   return (
     <div className='container'>
 
-      <textarea id='editor' placeholder='Markdown here' onChange={e=>setText(e.target.value)}></textarea>
+      <textarea id='editor' placeholder='Markdown here' onChange={e=>setText(DOMPurify.sanitize(marked(e.target.value)))}></textarea>
 
-      <div id='preview'>{text}</div>
+      <div id='preview' dangerouslySetInnerHTML={{__html: text}}>
+        </div>
 
     </div>
   );
